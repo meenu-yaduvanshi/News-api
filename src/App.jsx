@@ -14,15 +14,15 @@ function App() {
   const [category, setCategory] = useState("Business")
   const [page, setPage] = useState(1)
   const [sort, setSort] = useState("publishedAt")
-  // useEffect(() => { 
-  //   fetch(`https://newsapi.org/v2/everything?q=${category}&apiKey=18fc95f877b84bc3b5334d36c71220c1&pageSize=20&language=${language}&page=${page}`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data.articles);
-  // setBackdrop(false)
-  // return setNewsList(data.articles)
-  //     })
-  // }, [language, page, category])
+  useEffect(() => { 
+    fetch(`https://newsapi.org/v2/everything?q=${category}&apiKey=18fc95f877b84bc3b5334d36c71220c1&pageSize=20&language=${language}&page=${page}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.articles);
+  setBackdrop(false)
+  return setNewsList(data.articles)
+      })
+  }, [language, page, category])
   function setLanguageClick() {
     if (language === "en") {
       setBackdrop(true)
