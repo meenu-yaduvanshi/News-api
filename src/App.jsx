@@ -4,7 +4,7 @@ import { Grid, Pagination, Backdrop, CircularProgress, FormControl } from '@mui/
 import CardComponent from './CardComponent';
 import Header from './Header';
 import Category from './Category';
-// import Sort from './Sort';
+import Sort from './Sort';
 export const LanguageContext = createContext('en')
 
 function App() {
@@ -15,14 +15,14 @@ function App() {
   const [page, setPage] = useState(1)
   const [sort, setSort] = useState("publishedAt")
   useEffect(() => { 
-    fetch(`https://newsapi.org/v2/everything?q=${category}&apiKey=18fc95f877b84bc3b5334d36c71220c1&pageSize=20&language=${language}&page=${page}`)
+    fetch(`https://newsapi.org/v2/everything?q=${category}&apiKey=18fc95f877b84bc3b5334d36c71220c1&pageSize=20&language=${language}&page=${page}&sortby=${sort}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.articles);
+        // console.log(data.articles);
   setBackdrop(false)
   return setNewsList(data.articles)
       })
-  }, [language, page, category])
+  }, [language, page, category, sort])
   function setLanguageClick() {
     if (language === "en") {
       setBackdrop(true)
@@ -32,7 +32,7 @@ function App() {
       setLanguage("en")
     }
   }
-  function handleChanagePage(event, value) {
+  function handleChanagePage(value) {
     window.scrollTo(0, 0)
     setPage(value)
     setBackdrop(true)
@@ -42,9 +42,10 @@ function App() {
     setBackdrop(true)
   }
 
-  // const handleSort = (event) => {
-  //   setSort(event.target.value);
-  // };
+  const handleSort = (event) => {
+    setBackdrop(true)
+    setSort(event.target.value);
+  };
 
   return (
     <div className='container'>
@@ -55,7 +56,7 @@ function App() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-        {/* <Sort handleSort={handleSort} /> */}
+        <Sort handleSort={handleSort} sort={sort} />
         <Header setLanguaseClick={setLanguageClick} language={language} />
         <Category changeCategory={changeCategory} />
         <Grid container spacing={4}>
