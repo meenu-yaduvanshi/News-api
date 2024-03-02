@@ -7,7 +7,7 @@ function Header({ language, setLanguaseClick }) {
     return (
         <>
             <ButtonGroup variant="contained" aria-label="Basic button group">
-                <Button onClick={setLanguaseClick}>{language === "en" ? ("english") : ("spanish")}</Button>
+                <Button onClick={setLanguaseClick}>{language === "en" ? ("english to spanish") : ("spanish to english")}</Button>
             </ButtonGroup>
         </>
     )

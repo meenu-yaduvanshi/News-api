@@ -14,13 +14,13 @@ function App() {
   const [category, setCategory] = useState("Business")
   const [page, setPage] = useState(1)
   const [sort, setSort] = useState("publishedAt")
-  useEffect(() => { 
+  useEffect(() => {
     fetch(`https://newsapi.org/v2/everything?q=${category}&apiKey=18fc95f877b84bc3b5334d36c71220c1&pageSize=20&language=${language}&page=${page}&sortby=${sort}`)
       .then((response) => response.json())
       .then((data) => {
         // console.log(data.articles);
-  setBackdrop(false)
-  return setNewsList(data.articles)
+        setBackdrop(false)
+        return setNewsList(data.articles)
       })
   }, [language, page, category, sort])
   function setLanguageClick() {
@@ -50,25 +50,38 @@ function App() {
   return (
     <div className='container'>
       <LanguageContext.Provider value='language'>
+        <div className='header'>
+          <h1>Latest news</h1>
+        </div>
         <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-       open={backdrop}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-        <Sort handleSort={handleSort} sort={sort} />
-        <Header setLanguaseClick={setLanguageClick} language={language} />
-        <Category changeCategory={changeCategory} />
-        <Grid container spacing={4}>
-          {newsList.length && newsList.map((newsItem, index) => {
-            return <Grid item xs={4} key={index}>
-              <CardComponent newsItem={newsItem} />
-            </Grid>
-          })}
-        </Grid>
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={backdrop}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        <div className='lang'> <Header setLanguaseClick={setLanguageClick} language={language} /></div>
+        <div className='sort'>
+          <Sort handleSort={handleSort} sort={sort} />
+        </div>
+        <div className='category'>
+          <Category changeCategory={changeCategory} />
+        </div>
+        <br />
+        <br />
+        <div className='content'>
+          <Grid container spacing={4}>
+            {newsList.length && newsList.map((newsItem, index) => {
+              return <Grid item xs={4} key={index}>
+                <CardComponent newsItem={newsItem} />
+              </Grid>
+            })}
+          </Grid>
+        </div>
       </LanguageContext.Provider >
-      <Pagination count={5} shape="rounded" onChange={handleChanagePage} />
-    </div>
+      <div className='pagination'>
+        <Pagination variant="outlined" count={5} shape="rounded" onChange={handleChanagePage} />
+      </div>
+    </div >
   )
 }
 
